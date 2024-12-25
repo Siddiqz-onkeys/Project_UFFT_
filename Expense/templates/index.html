@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>My Expenses</title>
+
+        <link rel="stylesheet" href="{{ url_for('expense.static', filename='styles.css') }}">
+
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+        <script src="{{ url_for('expense.static', filename='script.js') }}"></script>
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <header> <h1 id="header_text"> UNIFIED FAMILY FINANCE TRACKER</h1></header>
+         <div class="feature_buttons">
+            <button onclick=" document.getElementById('add_expense').style.display='block' "> Add Expense</button>
+            <button onclick=""> Overview </button>
+            <button onclick=""> Sort and Filter </button>
+         </div>
+         <div class="body">
+            <!-- ####### ADD EXPENSE FORM #######-->
+            <div class="add_expense_form">
+                <!-- #############  START OF THE FORM ###############-->
+                <form id="add_expense" method="POST" action="{{ url_for('expense.get_form_data') }}" enctype="multipart/form-data" style="display: none;">
+
+                    
+                    <!-- ######### User_ID #######-->
+                    <label for="user_ID" name="user_id">User_ID</label>
+                    <input type="number" value="1" disabled>
+                    <br><br>
+
+
+                    <!-- ######### family_ID #######-->
+                    <label for="family_ID" name="family_id">Family_ID</label>
+                    <input type="number" value="1" disabled><br><br>
+
+
+                    <!-- ########## the input for category ##########-->
+                    <label for="category"> Category:</label>
+                    <select id="category" name="category">
+                        <option value="" disabled selected>Select a Category</option>
+
+                        <!-- Housing section-->
+                        <optgroup label="house hold expenses">
+                            <option value="rent"> rent </option>
+                            <option value="furniture"> Furniture </option>
+                            <option value="maid"> Maid </option>
+                            <option value="appliances"> Appliances </option>
+                            <option value="grociries">Grociries</option>
+                            <option value="bills">Bills</option>
+                        </optgroup>
+
+                        <!-- Financial Commitmetns -->
+                        <optgroup label="Financial Commitments">
+                            <option value="fees">Fees</option>
+                            <option value="emi">EMI</option>
+                            <option value="investment">Investments</option>
+                        </optgroup>
+
+                        <!--LifeStyle expenses-->
+                        <optgroup label="Lifestyle Expenses">
+                            <option value="Food">Food</option>
+                            <option value="Travel">Travel</option>
+                            <option value="Clothes">Clothes</option>
+                        </optgroup>
+
+                        <!--Health and Medical-->
+                        <option value="health">Health</option>
+                        <option value="Medical">Medical</option>
+
+                        <!-- Vehicle Maintainance -->
+                        <option value="vehicle maintainace"> vehicle maintainance</option>
+
+                        <!--Mischellenous -->
+                        <option value="miscellaneous">Mischellenous</option>
+
+                        <!--Others -->
+                        <option value="others">Others</option>
+                    </select>
+                    <br><br>
+
+                    <!-- ###########  DATE INPUT  ##########-->
+                    <label for="date" name="date">Select the date:</label>
+                    <input type="date" id="date" name="date" max="{{ max_date }}"><br><br>
+
+                    <!-- ###############  AMOUNT INPUT  ##########-->
+                    <label for="amount" name="amount">Amount:</label>
+                    <input type="number" step="0.01" id="amount" name="amount"><br><br>
+
+                    <!-- ############# DESCRIPTION  ########### -->
+                    <label for="desc" name="desc">Description:</label>
+                    <input type="text" id="desc" name="desc"><br><br>
+
+                    <!--############## FILE UPLOAD ############# -->
+                    <label for="receipt" name="receipt"> Receipt: </label>
+                    <input type="file" id="file" name="file" accept="image/*,application/pdf"><br><br>  
+
+                    <!-- ########### SUBMIT BUTTON ##########-->
+                    <button type="submit">ADD EXPENSE</button>
+
+                    <button type="button" onclick="document.getElementById('add_expense').style.display='none'">CANCEL</button>
+                </form>
+            </div>
+            <!-- ###### DEFAULT VIEW OF THE TABLE #####-->
+            <div class="default_view_table">
+
+                <!-- THE TABLE OF EXPENSES -->
+                <table>
+                    <thead>
+                        <tr><!-- header of the table -->
+                                <th></th><!--To edit-->
+
+                                <th>Date</th>     
+
+                                <th>Category</th>
+                                
+                                <th>Amount</th>
+                                
+                                <th>Description</th>                    
+                                
+                                <th>Receipt</th>
+                                
+                                <th></th> <!-- to delete -->
+                        </tr>
+                    </thead> 
+                    <tbody>
+                        {% for expense in expenses %}
+                        <div class="exp_id" style="display:none">{{ expense.expense_id}}</div>
+                        <tr>                    
+                             <td>
+                                <i class="fas fa-edit"></i>                                
+                            </td>
+                            <td>{{expense.date_in}}</td>                    
+                            <td>{{expense.category}}</td>
+                            <td>{{expense.amount}}</td>
+                            <td>
+                                {% if expense.desc %}
+                                    {{expense.desc}}
+                                {% else %}
+                                ## No Description ##
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if expense.receipt %}
+                                <a href="{{ url_for('expense.static', filename='uploads/receipts/' + expense.receipt) }}" target="_blank">
+                                    View Receipt
+                                </a>
+                                {% else %}
+                                ## No Receipt ##
+                                {% endif %}
+                            </td>
+                            <td>
+                                
+                                <form method="POST" action="{{ url_for('expense.delete_expense', expense_id=expense.expense_id) }}">
+                                    <button class="delete_btn">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </form>
+                                
+                                
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="footer">
+        </div>
+    </body>
+</html>
