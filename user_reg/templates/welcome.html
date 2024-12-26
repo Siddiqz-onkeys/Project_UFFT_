@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Account created</h1>
+    <form action="{{ url_for('expense.index') }}">
+        <input type="submit" value="expenses">
+    </form>
+    <br>
+    <br>
+    <form action="{{ url_for('Saving.index') }}" method="get">
+        <input type="submit" value="Saving">
+    </form>
+</body>
+</html>

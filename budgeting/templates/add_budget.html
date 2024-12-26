@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Budget</title>
+    <link rel="stylesheet" href="static/styles.css">
+</head>
+<body class="add-budget-page">
+    <div class="form-container">
+        <header>
+            <img src="static/logo.png" alt="Logo" class="logo">
+            <h1>Add a New Budget</h1>
+        </header>
+
+        <form method="POST">
+            <label>Category:</label>
+            <input type="text" name="category" required><br>
+            
+            <label>Budget Amount:</label>
+            <input type="number" name="budget_amount" required><br>
+            <label>Threshold Amount:</label>
+            <input type="number" name="threshold_amount" required><br>  <!-- New field -->
+            <label>Due Date:</label>
+            <input type="date" name="due_date" required><br>
+            
+            <button type="submit" class="btn submit-btn">Add Budget</button>
+        </form>
+    </div>
+</body>
+</html>
