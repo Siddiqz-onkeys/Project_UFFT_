@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Expenses</title>
+    <link rel="stylesheet" href="static/styles.css">
+</head>
+<body class="expenses-page">
+    <div class="form-container">
+        <header>
+            <img src="static/logo.png" alt="Logo" class="logo">
+            <h1>Add Expenses</h1>
+        </header>
+
+        <form method="POST">
+            <label>Select Budget:</label>
+            <select name="budget_id" required>
+                {% for budget in budgets %}
+                    <option value="{{ budget.budget_id }}">{{ budget.category }}</option>
+                {% endfor %}
+            </select><br>
+
+            <label>Amount:</label>
+            <input type="number" name="amount" required><br>
+
+            <label>Date:</label>
+            <input type="date" name="date" required><br>
+
+            <label>Description:</label>
+            <input type="text" name="description"><br>
+
+            <button type="submit" class="btn submit-btn">Add Expense</button>
+        </form>
+    </div>
+</body>
+</html>
