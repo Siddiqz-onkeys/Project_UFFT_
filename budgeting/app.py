@@ -20,7 +20,7 @@ def add_budget():
         db.session.add(new_budget)
         db.session.commit()
         
-        flash('Budget added successfully!', 'success')
+        flash('Budget added successfully!', 'success') 
         return redirect('/')
     return render_template('add_budget.html')
 
@@ -105,3 +105,4 @@ def edit_budget(budget_id):
 
 if __name__ == '__main__':
     app.run(debug=True)
+#

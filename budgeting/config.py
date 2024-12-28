@@ -17,3 +17,4 @@ app.secret_key = "your_secret_key"  # For session and flash messages
 # Initialize extensions
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
+#
